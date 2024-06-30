@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     public SpriteRenderer cardSpriteRenderer;
     public CardController mainCardController;
     public float fMovingSpeed = 0f;
+    public float fRotationCoef;
+    public float fRotatingSpeed;
     public float fSideMargin;
     float alphaText;
     public float divideValue;
@@ -29,12 +31,19 @@ public class GameManager : MonoBehaviour
     public SpriteRenderer actionBackground;
     public float fTransparency;
     public float backdivideValue;
-
+    public Vector2 defaultPositionCard;
     Vector3 pos;
+    public Vector3 cardRotation;
+    public Vector3 initRotation;
     public int rollDice = 0;
     public Color actionBackgroundColor;
- 
-
+    public bool isSubstitung = false;
+    public static int human;
+    public static int religion;
+    public static int army;
+    public static int money;
+    public static int cardNum;
+    public static int maxValue = 100;
     void Start()
     {
       LoadCard(testCard);
@@ -89,9 +98,23 @@ public class GameManager : MonoBehaviour
 
             Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             cardGameObject.transform.position = pos;
+            cardGameObject.transform.eulerAngles = new Vector3(0, 0, cardGameObject.transform.position.x * fRotationCoef);
+
         }
-        else{
-            cardGameObject.transform.position = Vector2.MoveTowards(cardGameObject.transform.position,new Vector2(0,0),fMovingSpeed);
+        else if (!isSubstitung)
+        {
+            cardGameObject.transform.position = Vector2.MoveTowards(cardGameObject.transform.position, defaultPositionCard, fMovingSpeed);
+            cardGameObject.transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+        else if (isSubstitung)
+        {
+            cardGameObject.transform.eulerAngles = Vector3.MoveTowards(cardGameObject.transform.eulerAngles, cardRotation, fRotatingSpeed);
+        }
+
+        characterDialogue.text = currentCard.dialogue;
+        if (cardGameObject.transform.eulerAngles == cardRotation)
+        {
+            isSubstitung = false;
         }
     }
 
@@ -102,7 +125,10 @@ public class GameManager : MonoBehaviour
         leftQuote = card.leftQuote;
         rightQuote = card.rightQuote;
         characterDialogue.text = card.dialogue;
-
+         cardGameObject.transform.position = defaultPositionCard;
+        cardGameObject.transform.eulerAngles = new Vector3(0, 0, 0);
+        isSubstitung = true;
+        cardGameObject.transform.eulerAngles = initRotation;
     }
 
     public void NewCard()

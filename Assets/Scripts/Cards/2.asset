@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a60fc9cb772f99d4eb84f7c99b8fa632, type: 3}
   m_Name: 2
   m_EditorClassIdentifier: 
-  cardID: 0
-  cardName: 
-  sprite: 0
-  leftQuote: 
-  rightQuote: 
-  dialogue: 
+  cardID: 2
+  cardName: "\u0444\u044B\u0432\u0444\u044B\u0432"
+  sprite: 1
+  leftQuote: "\u041B\u0415\u0412\u041E"
+  rightQuote: "\u041F\u0420\u0410\u0412\u041E"
+  dialogue: "\u0410\u0417\u0410\u0425\u0412\u0425\u0410\u0425\u0410\u0412\u0425\u0410\u0410\u0425"
